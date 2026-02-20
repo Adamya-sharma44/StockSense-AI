@@ -15,7 +15,7 @@ connectDB();
 app.use(express.json());
 app.use(
   cors({
-    origin: ["http://localhost:5173", process.env.CLIENT_URL].filter(Boolean),
+    origin: ["http://localhost:5173", "https://stock-sense-ai-mu.vercel.app", process.env.CLIENT_URL].filter(Boolean),
     credentials: true
   })
 );
