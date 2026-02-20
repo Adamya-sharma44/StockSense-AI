@@ -1,0 +1,24 @@
+# AWS App Runner Configuration
+# This file is used for deploying to AWS App Runner
+
+version: 1.0
+runtime: nodejs20
+build:
+  commands:
+    build:
+      - npm install
+run:
+  command: npm start
+  port: 5000
+
+environment:
+  - name: MONGO_URI
+    valueFrom: # Set in App Runner console or use Secrets Manager
+  - name: NODE_ENV
+    value: "production"
+  - name: CLIENT_URL
+    value: "https://YOUR_FRONTEND_URL" # Replace with your deployed frontend URL
+  - name: JWT_SECRET
+    valueFrom: # Set in App Runner console or use Secrets Manager
+  - name: OPENAI_API_KEY
+    valueFrom: # Set in App Runner console or use Secrets Manager
