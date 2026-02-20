@@ -11,14 +11,27 @@ const app = express();
 // Connect DB
 connectDB();
 
-// Middleware
-app.use(express.json());
+// CORS configuration
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://stock-sense-ai-mu.vercel.app",
+  process.env.CLIENT_URL,
+].filter(Boolean);
+
 app.use(
   cors({
-    origin: ["http://localhost:5173", "https://stock-sense-ai-mu.vercel.app", process.env.CLIENT_URL].filter(Boolean),
-    credentials: true
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("CORS not allowed"));
+      }
+    },
+    credentials: true,
   })
 );
+
+app.options("*", cors());
 
 if (process.env.NODE_ENV !== 'test') {
   app.use(morgan('dev'));
